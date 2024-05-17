@@ -1,0 +1,147 @@
+root: true
+ignorePatterns:
+  - '**/*'
+  - '!*'
+  - '!tools/*'
+parserOptions:
+  project: ./tsconfig.base.json
+plugins:
+  - '@nx'
+  - eslint-plugin-jest
+  - eslint-plugin-jsdoc
+  - eslint-plugin-jest
+  - eslint-plugin-prefer-arrow
+overrides:
+  # Only TS
+  - files:
+      - '*.ts'
+      - '*.tsx'
+    extends:
+      - plugin:@nx/typescript
+      - plugin:@nx/react
+      - eslint-config-airbnb
+      - eslint-config-airbnb/hooks
+      - eslint-config-airbnb-typescript
+    rules: {}
+
+  # Only JS
+  - files:
+      - '*.js'
+      - '*.jsx'
+    extends:
+      - plugin:@nx/javascript
+      - eslint-config-airbnb
+      - eslint-config-airbnb/hooks
+    rules: {}
+  - files:
+      - '*.spec.ts'
+      - '*.spec.tsx'
+      - '*.spec.js'
+      - '*.spec.jsx'
+    env:
+      jest: true
+    rules: {}
+
+  # Only YAML
+  - files:
+      - '*.yaml'
+      - '*.yml'
+    extends:
+      # Документация по правилам YML:
+      # https://www.npmjs.com/package/eslint-plugin-yml#white_check_mark-rules
+      'plugin:yml/standard'
+    rules:
+      yml/file-extension:
+        - error
+        - extension: yml
+          caseSensitive: true
+      yml/quotes:
+        - error
+        - prefer: single
+          avoidEscape: true
+      yml/no-multiple-empty-lines:
+        - error
+        - max: 1
+
+  # Overwrites for all JSX?/TSX?
+  - files:
+      - '*.ts'
+      - '*.tsx'
+      - '*.js'
+      - '*.jsx'
+    rules:
+      '@nx/enforce-module-boundaries':
+        - error
+        - enforceBuildableLibDependency: true
+          allow: []
+          depConstraints:
+            - sourceTag: '*'
+              onlyDependOnLibsWithTags:
+                - '*'
+      '@typescript-eslint/no-use-before-define':
+        - error
+        - allowNamedExports: false
+          classes: true
+          functions: false
+          variables: true
+      import/prefer-default-export: off
+      import/no-extraneous-dependencies:
+        - error
+        - peerDependencies: true
+          includeInternal: true
+          includeTypes: true
+          devDependencies:
+            # Webpack Configs
+            - '**/webpack-*.js'
+            - '**/webpack/*.js'
+            # Storybooks
+            - '**/*.stories.tsx'
+            - '**/.storybook/*'
+            # Mocks, fixtures and reusable tests
+            - '**/*.fixture.*'
+            - '**/*.stub.*'
+            - '**/*.mock.*'
+            - '**/*.steps.*'
+            - '**/__fixtures__/*'
+            - '**/__mocks__/*'
+            - '**/__mocks__/*'
+            # Tests
+            - jest.preset.js
+            - '**/*.spec.*'
+            - '**/test-setup.*'
+            - '**/**-e2e/*'
+            - '**/**-e2e-*'
+            - '**/e2e/*'
+            - '**/__tests__/*'
+            # Monorepo tools
+            - 'tools/*'
+            - 'tools/**/*'
+      import/no-relative-packages: error
+      import/order:
+        - error
+        - alphabetize:
+            order: asc
+            caseInsensitive: true
+          groups:
+            - builtin
+            - external
+            - internal
+          newlines-between: always
+          warnOnUnassignedImports: true
+      no-console:
+        - error
+        - allow:
+            - info
+            - warn
+            - error
+      no-use-before-define:
+        - error
+        - allowNamedExports: false
+          classes: true
+          functions: false
+          variables: true
+      react/jsx-props-no-spreading: off
+      react/prop-types: off
+      react/require-default-props: off
+      react/react-in-jsx-scope: off
+      react/function-component-definition: off

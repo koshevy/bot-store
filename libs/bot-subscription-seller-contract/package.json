@@ -1,0 +1,7 @@
+{
+  "name": "@bot-store/bot-subscription-seller-contract",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "zod": ">= 3"
+  }
+}
