@@ -6,9 +6,9 @@ const config: StorybookConfig = {
     '../../../libs/ui-dynamic-form/**/*.stories.@(js|jsx|ts|tsx|mdx)',
   ],
   addons: [
-    '@storybook/addon-essentials',
     '@nx/react/plugins/storybook',
     '@storybook/addon-interactions',
+    '@storybook/addon-essentials',
   ],
   framework: {
     name: '@storybook/react-webpack5',

@@ -1,8 +1,8 @@
-name: Deploy static content to Pages
+name: Deploy Storybook to GitHub Pages
 
 on:
   push:
-    branches: ["main"]
+    branches: ['main']
   workflow_dispatch:
 
 permissions:
@@ -11,8 +11,11 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: 'pages'
   cancel-in-progress: true
+
+env:
+  STORYBOOK_HOST: 'https://koshevy.github.io/bot-store'
 
 jobs:
   deploy:
@@ -69,3 +72,7 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Run tests against the published storybook
+        run: >
+          ./node_modules/.bin/nx run ui-storybook-host:test-storybook --url $STORYBOOK_HOST --no-index-json --verbose

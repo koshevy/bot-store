@@ -107,6 +107,8 @@ overrides:
             - '**/__mocks__/*'
             # Tests
             - jest.preset.js
+            - '**/jest.config.ts'
+            - '**/test-runner-jest.config.js'
             - '**/*.spec.*'
             - '**/test-setup.*'
             - '**/**-e2e/*'

@@ -25,4 +25,5 @@ export default {
   moduleFileExtensions: ['ts', 'js', 'html'],
   testEnvironment: 'node',
   coverageDirectory: '../../coverage/libs/api-bot-subscription-seller',
+  reporters: [['github-actions', {silent: false}], 'summary'],
 };
